@@ -72,4 +72,14 @@ CONSTRAINT pk_dosen PRIMARY KEY (nip)
 INSERT INTO dosen VALUES(198701012015021001,'Ahmad Hidayat','laki-laki',6000000);
 INSERT INTO dosen VALUES(198505212013022001,'Rina Mediaswati','perempuan',6500000);
 INSERT INTO dosen VALUES(197010222010011001,'Ari Kurniawan','laki-laki',8000000);
+CREATE TABLE membimbing(
+nip int,
+nim int,
+CONSTRAINT pk_membimbing PRIMARY KEY (nip, nim),
+CONSTRAINT fk_membimbing_mahasiswa FOREIGN KEY (nim) REFERENCES mahasiswa(nim),
+CONSTRAINT fk_membimbing_dosen FOREIGN KEY (nip) REFERENCES dosen(nip)
+);
+INSERT INTO membimbing VALUES(198701012015021001,135002);
+INSERT INTO membimbing VALUES(197010222010011001,181001);
+INSERT INTO membimbing VALUES(198505212013022001,182002);
 COMMIT;
