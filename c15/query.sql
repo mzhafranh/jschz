@@ -154,7 +154,7 @@ SELECT nim, nama_mahasiswa FROM mahasiswa NATURAL JOIN ambil_matkul NATURAL JOIN
 /*
 TASK 6
 */
-SELECT nama_dosen, count(nim) as jumlah_mahasiswa FROM dosen NATURAL JOIN mengajar_matkul NATURAL JOIN ambil_matkul GROUP BY nip; 
+SELECT nama_dosen, count(DISTINCT nim) as jumlah_mahasiswa FROM dosen NATURAL JOIN mengajar_matkul NATURAL JOIN ambil_matkul GROUP BY nip; 
 
 /*
 TASK 7
@@ -165,5 +165,7 @@ SELECT nim, nama_mahasiswa, (cast(strftime('%Y.%m%d', 'now') - strftime('%Y.%m%d
 TASK 8
 */
 SELECT nim, nama_mahasiswa, nama_jurusan, nip, nama_dosen, nama_matkul, indeks FROM mahasiswa NATURAL JOIN jurusan NATURAL JOIN ambil_matkul NATURAL JOIN matkul NATURAL JOIN mengajar_matkul NATURAL JOIN dosen WHERE indeks = "D" OR indeks = "E";
+
+SELECT m.nim, nama_mahasiswa, nama_jurusan, d.nip, nama_dosen, nama_matkul, indeks FROM mahasiswa AS m, jurusan AS j, ambil_matkul AS am, matkul, mengajar_matkul AS mm, dosen AS d WHERE m.id_jurusan  = j.id_jurusan AND m.nim = am.nim AND am.id_matkul = matkul.id_matkul AND mm.id_matkul = matkul.id_matkul AND mm.nip = d.nip AND am.indeks = "D" OR am.indeks = "E";
 
 COMMIT;
