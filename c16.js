@@ -4,7 +4,7 @@ class CarFactory{
     }
 
     produce(year){
-        let amount = Math.floor(Math.random() * 10);
+        let amount = Math.ceil(Math.random() * 10);
         for (let i = 0; i < amount; i++) {
             let wheel = new Tyre((250 + Math.floor(Math.random() * 10)), Math.floor(Math.random() * 10) + 2);
             let randomizeType = Math.floor(Math.random() * 10);
