@@ -27,7 +27,6 @@ class CarFactory{
     Door: ${item.getDoor()}
     ${item.tyre.describeTyre()}
     `)}
-
         this.cars.forEach(describeCar);
     }
     
@@ -47,20 +46,10 @@ class CarFactory{
             if((item.getGuaranteeEnd()) < year){
                 console.log(`Car #${index + 1} is no longer guaranteed
 this car guarantee ended on ${item.guaranteeEnd}.
-`)
-            }
+`)}
         }
         this.cars.forEach(checkGuarantee);
     }
-
-    /*
-    addYearRandomly(){
-        function addYear(item){
-            item.setYear(item.getYear + Math.floor(Math.random() * 10));
-        }
-        this.cars.forEach(addYear);
-    }
-    */
 
 }
 
@@ -103,8 +92,8 @@ class Tyre{
 
     describeTyre(){
         return `Tyre specification:
-        radius: ${this.radius}
-        spokes: ${this.spokes}`
+        radius: ${this.Radius}
+        spokes: ${this.Spokes}`
     }
 }
 
