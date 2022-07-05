@@ -26,9 +26,7 @@ class CarFactory{
     Seat: ${item.getSeat()}
     Door: ${item.getDoor()}
     ${item.tyre.describeTyre()}
-    `  
-            )
-        }
+    `)}
 
         this.cars.forEach(describeCar);
     }
