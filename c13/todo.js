@@ -157,7 +157,7 @@ try{
 function main(){
     const data = JSON.parse(fs.readFileSync('./todolist.json',{encoding:'utf8', flag:'r'}));
     var command = process.argv[2]
-    if (command.startsWith("filter:")){  
+    if (command !== undefined && command.startsWith("filter:")){  
         var filter = command.slice(7,command.length);
         filterStuff(data, filter);
     }
