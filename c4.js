@@ -11,6 +11,7 @@ function indexPrime(param1){
             for(var i = 0; i < arrPrime.length; i++){
                 if(currentNumber % arrPrime[i] === 0){
                     isPrime = false;
+                    break;
                 }
             }
             if (isPrime){
