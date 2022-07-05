@@ -3,14 +3,15 @@ class CarFactory{
         this.cars = [];
     }
 
-    produce(amount){
+    produce(year){
+        let amount = Math.floor(Math.random() * 10);
         for (let i = 0; i < amount; i++) {
             let wheel = new Tyre((250 + Math.floor(Math.random() * 10)), Math.floor(Math.random() * 10) + 2);
             let randomizeType = Math.floor(Math.random() * 10);
             if ((randomizeType % 2) === 0){
-                var newCar = new Avanza(wheel, 4, 4);
+                var newCar = new Avanza(wheel, 4, 4, year);
             } else {
-                var newCar = new Agya(wheel, 6, 4);
+                var newCar = new Agya(wheel, 6, 4, year);
             }
             this.cars.push(newCar);
         }
@@ -54,13 +55,13 @@ this car guarantee ended on ${item.guaranteeEnd}.
 }
 
 class Car{
-    constructor(tyre, seat, door){
+    constructor(tyre, seat, door, year){
         const { v4: uuidv4 } = require('uuid');
         this.engineNumber = uuidv4(); 
         this.tyre = tyre;
         this.seat = seat;
         this.door = door;
-        this.year = 2015 + Math.floor(Math.random() * 10);
+        this.year = year;
     }
 
     getEngineNumber(){
@@ -92,14 +93,14 @@ class Tyre{
 
     describeTyre(){
         return `Tyre specification:
-        radius: ${this.Radius}
-        spokes: ${this.Spokes}`
+        Radius: ${this.radius}
+        Spokes: ${this.spokes}`
     }
 }
 
 class Avanza extends Car{
-    constructor(tyre, seat, door){
-        super(tyre, seat, door);
+    constructor(tyre, seat, door, year){
+        super(tyre, seat, door, year);
         this.type = "Avanza";
         this.guarantee = 3;
         this.guaranteeEnd = this.getYear() + this.guarantee;
@@ -119,8 +120,8 @@ class Avanza extends Car{
 }
 
 class Agya extends Car{
-    constructor(tyre, seat, door){
-        super(tyre, seat, door);
+    constructor(tyre, seat, door, year){
+        super(tyre, seat, door, year);
         this.type = "Agya";
         this.guarantee = 5;
         this.guaranteeEnd = this.getYear() + this.guarantee;
@@ -139,7 +140,7 @@ class Agya extends Car{
 }
 
 let cf = new CarFactory();
-cf.produce(10);
+cf.produce(2022);
 cf.showList();
 cf.checkCarPerYear(2022);
 cf.checkGuaranteeYear(2025);
