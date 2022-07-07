@@ -20,8 +20,6 @@ export class University {
             head: ['NIM', 'Nama', 'Alamat', 'Jurusan']
             , colWidths: [10, 30, 30, 10]
         });
-
-        let temp = [];
         function isiTemp(item, index) {
             table.push([item.getNim(), item.getNama(), item.getAlamat(), item.getJurusan()]);
         }
@@ -81,8 +79,6 @@ export class University {
             head: ['ID', 'Nama']
             , colWidths: [10, 30]
         });
-
-        let temp = [];
         function isiTemp(item, index) {
             table.push([item.getId(), item.getNama()]);
         }
@@ -140,8 +136,6 @@ export class University {
             head: ['ID', 'Nama']
             , colWidths: [10, 30]
         });
-
-        let temp = [];
         function isiTemp(item, index) {
             table.push([item.getId(), item.getNama()]);
         }
@@ -199,8 +193,6 @@ export class University {
             head: ['ID', 'Nama']
             , colWidths: [10, 30]
         });
-
-        let temp = [];
         function isiTemp(item, index) {
             table.push([item.getId(), item.getNama()]);
         }
@@ -258,8 +250,6 @@ export class University {
             head: ['ID', 'NIM', 'Mata Kuliah']
             , colWidths: [10, 10, 30]
         });
-
-        let temp = [];
         function isiTemp(item, index) {
             table.push([item.getId(), item.getNim(), item.getMatkul()]);
         }
