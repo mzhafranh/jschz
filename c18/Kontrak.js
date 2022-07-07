@@ -1,14 +1,14 @@
-export class Kontrak{
-    constructor(){
+export class Kontrak {
+    constructor() {
         this.id = 0;
         this.nim = 0;
         this.matkul = 0;
     }
 
-    setId(id){
+    setId(id) {
         this.id = id;
     }
-    
+
     setNim(nim) {
         this.nim = nim;
     }
@@ -17,15 +17,15 @@ export class Kontrak{
         this.matkul = matkul;
     }
 
-    getId(){
+    getId() {
         return this.id;
     }
 
-    getNim(){
+    getNim() {
         return this.nim;
     }
 
-    getMatkul(){
+    getMatkul() {
         return this.matkul;
     }
 }

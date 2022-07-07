@@ -1,9 +1,9 @@
-export class Matkul{
-    constructor(){
+export class Matkul {
+    constructor() {
         this.id = 0;
         this.nama = "";
     }
-    
+
     setId(id) {
         this.id = id;
     }
@@ -12,11 +12,11 @@ export class Matkul{
         this.nama = nama;
     }
 
-    getId(){
+    getId() {
         return this.id;
     }
 
-    getNama(){
+    getNama() {
         return this.nama;
     }
 }

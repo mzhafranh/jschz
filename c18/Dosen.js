@@ -12,11 +12,11 @@ export class Dosen {
         this.nama = nama;
     }
 
-    getId(){
+    getId() {
         return this.id;
     }
 
-    getNama(){
+    getNama() {
         return this.nama;
     }
 }
