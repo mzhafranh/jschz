@@ -86,7 +86,7 @@ export class University {
         function isiTemp(item, index) {
             table.push([item.getId(), item.getNama()]);
         }
-        this.arrMahasiswa.forEach(isiTemp);
+        this.arrJurusan.forEach(isiTemp);
         console.log(table.toString());
     }
 
