@@ -105,25 +105,25 @@ var currAddingProcessMahasiswa = "addMahasiswa";
 var currDeleteProcessMahasiswa = "inputNim";
 
 //Menu Jurusan
-var jsn  = new Jurusan();
+var jsn = new Jurusan();
 var currSearchingProcessJurusan = "inputId";
 var currAddingProcessJurusan = "addJurusan";
 var currDeleteProcessJurusan = "inputId";
 
 //Menu Dosen
-var dsn  = new Dosen();
+var dsn = new Dosen();
 var currSearchingProcessDosen = "inputId";
 var currAddingProcessDosen = "addDosen";
 var currDeleteProcessDosen = "inputId";
 
 //Menu Matkul
-var mtkl  = new Matkul();
+var mtkl = new Matkul();
 var currSearchingProcessMatkul = "inputId";
 var currAddingProcessMatkul = "addMatkul";
 var currDeleteProcessMatkul = "inputId";
 
 //Menu Kontrak
-var knt  = new Kontrak();
+var knt = new Kontrak();
 var currSearchingProcessKontrak = "inputId";
 var currAddingProcessKontrak = "addKontrak";
 var currDeleteProcessKontrak = "inputId";
@@ -573,7 +573,7 @@ Username: `);
                     rl.setPrompt("NIM    : ");
                     rl.prompt();
                 }
-				else if (currAddingProcessKontrak === "setNim") {
+                else if (currAddingProcessKontrak === "setNim") {
                     knt.setNim(answer);
                     currAddingProcessKontrak = "setMatkul";
                     rl.setPrompt("Matkul : ");
@@ -622,6 +622,3 @@ Username: `);
     }
 
 })
-
-
-

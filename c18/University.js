@@ -54,8 +54,8 @@ export class University {
             }
         }
         let index = this.arrMahasiswa.findIndex(checkNim);
-        if (index === (-1)){
-        this.arrMahasiswa.push(mahasiswa);
+        if (index === (-1)) {
+            this.arrMahasiswa.push(mahasiswa);
         } else {
             console.log(`Mahasiswa dengan NIM ${nim} sudah terdaftar, masukkan NIM lain.`);
         }
@@ -114,7 +114,7 @@ export class University {
         }
         let index = this.arrJurusan.findIndex(checkId);
         if (index === (-1)) {
-        this.arrDosen.push(jurusan);
+            this.arrDosen.push(jurusan);
         } else {
             console.log(`Jurusan dengan ID ${id} sudah terdaftar, masukkan ID lain.`);
         }
@@ -279,7 +279,7 @@ export class University {
         } else {
             console.log(`ID          : ${kontrak.getId()}`);
             console.log(`NIM         : ${kontrak.getNim()}`);
-			console.log(`Mata Kuliah : ${kontrak.getMatkul()}`);
+            console.log(`Mata Kuliah : ${kontrak.getMatkul()}`);
         }
     }
 
@@ -291,7 +291,7 @@ export class University {
             }
         }
         let indexMahasiswa = this.arrMahasiswa.findIndex(checkNim);
-        
+
         let idMatkul = kontrak.getMatkul();
         function checkId(item) {
             if (item.getId() === idMatkul) {
@@ -300,7 +300,7 @@ export class University {
         }
         let indexMatkul = this.arrMatkul.findIndex(checkId);
 
-        if(indexMahasiswa !== (-1) && indexMatkul !== (-1)){
+        if (indexMahasiswa !== (-1) && indexMatkul !== (-1)) {
             let id = kontrak.getId();
             function checkId(item) {
                 if (item.getId() === id) {
@@ -317,7 +317,6 @@ export class University {
             console.log(`Mahasiswa atau Matkul tidak terdaftar.`);
         }
 
-        
     }
 
     delKontrak(id) {
