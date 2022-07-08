@@ -1,4 +1,4 @@
-export class Jurusan{
+export class Jurusan {
     constructor(){
         this.id = 0;
         this.nama = "";

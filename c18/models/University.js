@@ -3,7 +3,6 @@ import { Dosen } from "./Dosen.js";
 import { Jurusan } from "./Jurusan.js";
 import { Kontrak } from "./Kontrak.js";
 import { Matkul } from "./Matkul.js";
-
 import Table from "cli-table";
 
 export class University {
@@ -110,7 +109,7 @@ export class University {
         }
         let index = this.arrJurusan.findIndex(checkId);
         if (index === (-1)) {
-            this.arrDosen.push(jurusan);
+            this.arrJurusan.push(jurusan);
         } else {
             console.log(`Jurusan dengan ID ${id} sudah terdaftar, masukkan ID lain.`);
         }
