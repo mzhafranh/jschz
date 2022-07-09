@@ -2,71 +2,104 @@ import { rl } from "../main.js";
 import MatkulView from "../views/MatkulView.js";
 import { MainMenuController } from "./MainMenuController.js";
 import { Matkul } from "../models/Matkul.js";
+import Table from "cli-table";
 
 export default class MatkulController {
-    static main(uni){
+    static main(uni) {
 
-        var mtkl = new Matkul();
+        function daftarMatkul() {
+            Matkul.read(function (err, data) {
+                if (err) {
+                    console.error(err);
+                    process.exit(1);
+                }
+                const tableMatkul = new Table({
+                    head: ['ID Matkul', 'Nama Matkul', 'SKS']
+                    , colWidths: [20, 30, 10]
+                });
 
-        function showMatkul(){
-            console.log('===================================================================');
-            uni.showMatkul();
-            MatkulView.menu();
-            menuOptions();
-        }
+                data.forEach(item => {
+                    tableMatkul.push([item.id_matkul, item.nama_matkul, item.sks]);
+                });
 
-        function cariMatkul(){
-            rl.question('Masukan ID: ', (answer) => {
-                uni.describeMatkul(answer);
+                console.log(tableMatkul.toString());
                 MatkulView.menu();
                 menuOptions();
+            })
+        }
+
+        function cariMatkul() {
+            rl.question('Masukan ID Matkul: ', (answer) => {
+                Matkul.search(answer, (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        process.exit(1)
+                    }
+                    if (data.length === 0){
+                        console.log(`Matkul dengan ID ${answer} tidak ditemukan`);
+                        MatkulView.menu();
+                        menuOptions();
+                    } else {
+                        console.log(`
+Hasil pencarian matkul dengan id matkul '${id}':
+ID Matkul      : ${data[0].id_matkul}
+Nama Matkul    : ${data[0].nama_matkul}
+SKS		       : ${data[0].sks}
+                        `);
+                        MatkulView.menu();
+                        menuOptions();
+                    }
+                })
             });
         }
 
-        function tambahMatkul1(){
-            console.log(`Lengkapi data di bawah ini: `);
-            rl.question("ID     : ", (answer) => {
-                let id = answer;
-                tambahMatkul2(id);
-            });
+        function hapusMatkul(){
+            rl.question('Masukkan ID Matkul: ', (answer) => {
+                Matkul.remove(answer, (err) => {
+                    if (err) {
+                        console.error(err);
+                        process.exit(1)
+                    } else {
+                        console.log(`Matkul dengan ID: ${answer} telah dihapus`);
+                        daftarMatkul();
+                    }
+                })
+            })
         }
 
-        function tambahMatkul2(id){
-            rl.question("Nama   : ", (answer) => {
-                let nama = answer;
-                mtkl.setId(id);
-                mtkl.setNama(nama);
-                uni.addMatkul(mtkl);
-                mtkl = new Matkul();
-                console.log('===================================================================');
-                uni.showMatkul();
-                MatkulView.menu();
-                menuOptions();
-            });
+        function tambahMatkul() {
+            rl.question('Masukkan ID Matkul: ', (id) => {
+                rl.question('Masukkan Nama Matkul: ', (nama) => {
+                    rl.question('Masukkan SKS Matkul: ', (sks) => {
+                        Matkul.add(id, nama, sks, (err) => {
+                            if(err) {
+                                console.error(err);
+                                tambahMatkul();
+                            } else {
+                                console.log('Matkul telah ditambahkan');
+                                daftarMatkul();
+                            }
+                        })
+                    })
+                })
+            })
         }
 
-        function delMatkul(){
-            rl.question("Masukkan ID mata kuliah yang akan dihapus: ", (answer) => {
-                uni.delMatkul(answer);
-                MatkulView.menu();
-                menuOptions();
-            });
-        }
 
-        function menuOptions(){
+        function menuOptions() {
             rl.question('Masukan salah satu no. dari opsi di atas: ', (answer) => {
                 switch (answer) {
                     case "1":
-                        showMatkul();
+                        daftarMatkul();
                         break;
                     case "2":
                         cariMatkul();
                         break;
                     case "3":
-                        tambahMatkul1();
+                        tambahMatkul();
                         break;
                     case "4":
-                        delMatkul();
+                        hapusMatkul();
                         break;
                     case "5":
                         MainMenuController.main(uni);

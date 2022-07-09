@@ -2,71 +2,107 @@ import { rl } from "../main.js";
 import DosenView from "../views/DosenView.js";
 import { MainMenuController } from "./MainMenuController.js";
 import { Dosen } from "../models/Dosen.js";
+import Table from "cli-table";
 
 export default class DosenController {
-    static main(uni){
+    static main(uni) {
 
-        var dsn = new Dosen();
+        function daftarDosen() {
+            Dosen.read(function (err, data) {
+                if (err) {
+                    console.error(err);
+                    process.exit(1);
+                }
+                const tableDosen = new Table({
+                    head: ['NIP Dosen', 'Nama Dosen', 'Jenis Kelamin', 'Gaji']
+                    , colWidths: [25, 30, 15, 20]
+                });
 
-        function showDosen(){
-            console.log('===================================================================');
-            uni.showDosen();
-            DosenView.menu();
-            menuOptions();
-        }
+                data.forEach(item => {
+                    tableDosen.push([item.nip, item.nama_dosen, item.jenis_kelamin, item.gaji]);
+                });
 
-        function cariDosen(){
-            rl.question('Masukan ID: ', (answer) => {
-                uni.describeDosen(answer);
+                console.log(tableDosen.toString());
                 DosenView.menu();
                 menuOptions();
+            })
+        }
+
+        function cariDosen() {
+            rl.question('Masukan ID Dosen: ', (answer) => {
+                Dosen.search(answer, (err, data) => {
+                    if (err) {
+                        console.error(err);
+                        process.exit(1)
+                    }
+                    if (data.length === 0){
+                        console.log(`Dosen dengan ID ${answer} tidak ditemukan`);
+                        DosenView.menu();
+                        menuOptions();
+                    } else {
+                        console.log(`
+Hasil pencarian dosen dengan id dosen '${id}':
+NIP Dosen     : ${data[0].nip}
+Nama Dosen    : ${data[0].nama_dosen}
+Jenis Kelamin : ${data[0].jenis_kelamin}
+Gaji          : ${data[0].gaji}
+                        `);
+                        DosenView.menu();
+                        menuOptions();
+                    }
+                })
             });
         }
 
-        function tambahDosen1(){
-            console.log(`Lengkapi data di bawah ini: `);
-            rl.question("ID     : ", (answer) => {
-                let id = answer;
-                tambahDosen2(id);
-            });
+        function hapusDosen(){
+            rl.question('Masukkan NIP Dosen: ', (answer) => {
+                Dosen.remove(answer, (err) => {
+                    if (err) {
+                        console.error(err);
+                        process.exit(1)
+                    } else {
+                        console.log(`Dosen dengan NIP: ${answer} telah dihapus`);
+                        daftarDosen();
+                    }
+                })
+            })
         }
 
-        function tambahDosen2(id){
-            rl.question("Nama   : ", (answer) => {
-                let nama = answer;
-                dsn.setId(id);
-                dsn.setNama(nama);
-                uni.addDosen(dsn);
-                dsn = new Dosen();
-                console.log('===================================================================');
-                uni.showDosen();
-                DosenView.menu();
-                menuOptions();
-            });
+        function tambahDosen() {
+            rl.question('Masukkan NIP Dosen: ', (nip) => {
+                rl.question('Masukkan Nama Dosen: ', (nama) => {
+                    rl.question('Masukkan Jenis Kelamin Dosen: ', (jenis_kelamin) => {
+                        rl.question('Masukkan Gaji Dosen: ', (gaji) => {
+                            Dosen.add(nip, nama, jenis_kelamin, gaji, (err) => {
+                                if(err) {
+                                    console.error(err);
+                                    tambahDosen();
+                                } else {
+                                    console.log('Dosen telah ditambahkan');
+                                    daftarDosen();
+                                }
+                            })
+                        })
+                    })
+                })
+            })
         }
 
-        function delDosen(){
-            rl.question("Masukkan ID dosen yang akan dihapus: ", (answer) => {
-                uni.delDosen(answer);
-                DosenView.menu();
-                menuOptions();
-            });
-        }
 
-        function menuOptions(){
+        function menuOptions() {
             rl.question('Masukan salah satu no. dari opsi di atas: ', (answer) => {
                 switch (answer) {
                     case "1":
-                        showDosen();
+                        daftarDosen();
                         break;
                     case "2":
                         cariDosen();
                         break;
                     case "3":
-                        tambahDosen1();
+                        tambahDosen();
                         break;
                     case "4":
-                        delDosen();
+                        hapusDosen();
                         break;
                     case "5":
                         MainMenuController.main(uni);

@@ -1,22 +1,28 @@
+import { db } from "../main.js";
+
 export class Matkul {
-    constructor() {
-        this.id = 0;
-        this.nama = "";
+    static read(callback) {
+        db.all('SELECT * FROM matkul', (err, data) => {
+            callback(err, data);
+        })
     }
 
-    setId(id) {
-        this.id = id;
+    static add(id, nama, sks, callback){
+        db.run('INSERT INTO matkul VALUES (?, ?, ?)', [id, nama, sks], (err) => {
+            callback(err);
+        });
     }
 
-    setNama(nama) {
-        this.nama = nama;
+    static search(id, callback){
+        db.all('SELECT * FROM matkul WHERE id_matkul = ?', [id], (err, data) => {
+            callback(err, data);
+        })
     }
 
-    getId() {
-        return this.id;
-    }
+    static remove(id, callback){
+        db.run('DELETE FROM matkul WHERE id_matkul = ?', [id], (err) => {
+            callback(err);
+        })
 
-    getNama() {
-        return this.nama;
     }
 }

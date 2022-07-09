@@ -1,10 +1,15 @@
-import { University } from "./models/University.js";
-import * as readline from 'node:readline';
+import readline from 'readline';
 import { MainMenuController } from "./controllers/MainMenuController.js";
+import sqlite3 from 'sqlite3';
+
+export const db = new sqlite3.Database("kuliah.db", sqlite3.OPEN_READWRITE, err => {
+    if (err){
+        console.err(err);
+    }
+}) 
 
 export const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 
-var uni = new University();
 function welcome(){
 console.log(`===================================================================
             Welcome to Universitas Rubicamp Indonesia
@@ -24,7 +29,7 @@ function askPassword(user) {
         let pass = answer;
     if (user === "meng" && pass === "123"){
         console.log(`Welcome ${user}, your access level is: ADMIN`);
-        MainMenuController.main(uni);
+        MainMenuController.main();
     } else {
         console.log(`Username atau Password salah, silahkan coba lagi.`);
         askUsername();

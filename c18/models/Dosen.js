@@ -1,22 +1,28 @@
+import { db } from "../main.js";
+
 export class Dosen {
-    constructor() {
-        this.id = 0;
-        this.nama = "";
+    static read(callback) {
+        db.all('SELECT * FROM dosen', (err, data) => {
+            callback(err, data);
+        })
     }
 
-    setId(id) {
-        this.id = id;
+    static add(nip, nama, jenis_kelamin, gaji, callback){
+        db.run('INSERT INTO dosen VALUES (?, ?, ?, ?)', [nip, nama, jenis_kelamin, gaji], (err) => {
+            callback(err);
+        });
     }
 
-    setNama(nama) {
-        this.nama = nama;
+    static search(nip, callback){
+        db.all('SELECT * FROM dosen WHERE nip = ?', [nip], (err, data) => {
+            callback(err, data);
+        })
     }
 
-    getId() {
-        return this.id;
-    }
+    static remove(nip, callback){
+        db.run('DELETE FROM dosen WHERE nip = ?', [nip], (err) => {
+            callback(err);
+        })
 
-    getNama() {
-        return this.nama;
     }
 }

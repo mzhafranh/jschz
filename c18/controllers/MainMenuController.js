@@ -7,31 +7,31 @@ import MatkulController from "./MatkulController.js";
 import KontrakController from "./KontrakController.js";
 
 export class MainMenuController{
-    static main(uni){
+    static main(){
         MainMenuView.menu();
         rl.question("Masukan salah satu no. dari opsi di atas: ", (answer) => {
             switch (answer) {
                 case "1":
-                    MahasiswaController.main(uni);
+                    MahasiswaController.main();
                     break;
                 case "2":
-                    JurusanController.main(uni);
+                    JurusanController.main();
                     break;
                 case "3":
-                    DosenController.main(uni);
+                    DosenController.main();
                     break;
                 case "4":
-                    MatkulController.main(uni);
+                    MatkulController.main();
                     break;
                 case "5":
-                    KontrakController.main(uni);
+                    KontrakController.main();
                     break;
                 case "6":
                     process.exit(1);
                 default:
                     console.log("===================================================================")
                     console.log("Masukan tidak valid silahkan coba lagi.");
-                    MainMenuController.main(uni);
+                    MainMenuController.main();
             }
         })
     }

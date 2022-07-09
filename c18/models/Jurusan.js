@@ -1,22 +1,28 @@
+import { db } from "../main.js";
+
 export class Jurusan {
-    constructor(){
-        this.id = 0;
-        this.nama = "";
-    }
-    
-    setId(id) {
-        this.id = id;
+    static read(callback) {
+        db.all('SELECT * FROM jurusan', (err, data) => {
+            callback(err, data);
+        })
     }
 
-    setNama(nama) {
-        this.nama = nama;
+    static add(id, nama, callback){
+        db.run('INSERT INTO jurusan VALUES (?, ?)', [id, nama], (err) => {
+            callback(err);
+        });
     }
 
-    getId(){
-        return this.id;
+    static search(id, callback){
+        db.all('SELECT * FROM jurusan WHERE id_jurusan = ?', [id], (err, data) => {
+            callback(err, data);
+        })
     }
 
-    getNama(){
-        return this.nama;
+    static remove(id, callback){
+        db.run('DELETE FROM jurusan WHERE id_jurusan = ?', [id], (err) => {
+            callback(err);
+        })
+
     }
 }
