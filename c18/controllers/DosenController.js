@@ -29,19 +29,19 @@ export default class DosenController {
         }
 
         function cariDosen() {
-            rl.question('Masukan ID Dosen: ', (answer) => {
-                Dosen.search(answer, (err, data) => {
+            rl.question('Masukan NIP Dosen: ', (nip) => {
+                Dosen.search(nip, (err, data) => {
                     if (err) {
                         console.error(err);
                         process.exit(1)
                     }
                     if (data.length === 0){
-                        console.log(`Dosen dengan ID ${answer} tidak ditemukan`);
+                        console.log(`Dosen dengan NIP ${nip} tidak ditemukan`);
                         DosenView.menu();
                         menuOptions();
                     } else {
                         console.log(`
-Hasil pencarian dosen dengan id dosen '${id}':
+Hasil pencarian dosen dengan NIP dosen '${nip}':
 NIP Dosen     : ${data[0].nip}
 Nama Dosen    : ${data[0].nama_dosen}
 Jenis Kelamin : ${data[0].jenis_kelamin}
@@ -55,13 +55,13 @@ Gaji          : ${data[0].gaji}
         }
 
         function hapusDosen(){
-            rl.question('Masukkan NIP Dosen: ', (answer) => {
-                Dosen.remove(answer, (err) => {
+            rl.question('Masukkan NIP Dosen: ', (nip) => {
+                Dosen.remove(nip, (err) => {
                     if (err) {
                         console.error(err);
                         process.exit(1)
                     } else {
-                        console.log(`Dosen dengan NIP: ${answer} telah dihapus`);
+                        console.log(`Dosen dengan NIP: ${nip} telah dihapus`);
                         daftarDosen();
                     }
                 })
@@ -105,7 +105,7 @@ Gaji          : ${data[0].gaji}
                         hapusDosen();
                         break;
                     case "5":
-                        MainMenuController.main(uni);
+                        MainMenuController.main();
                         break;
                     default:
                         console.log(`Masukan invalid.`);

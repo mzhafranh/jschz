@@ -110,7 +110,7 @@ Tahun     : ${data[0].tahun_ajaran}
                         hapusKontrak();
                         break;
                     case "5":
-                        MainMenuController.main(uni);
+                        MainMenuController.main();
                         break;
                     default:
                         console.log(`Masukan invalid.`);

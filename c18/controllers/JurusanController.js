@@ -99,7 +99,7 @@ Nama Jurusan    : ${data[0].nama_jurusan}
                         hapusJurusan();
                         break;
                     case "5":
-                        MainMenuController.main(uni);
+                        MainMenuController.main();
                         break;
                     default:
                         console.log(`Masukan invalid.`);
