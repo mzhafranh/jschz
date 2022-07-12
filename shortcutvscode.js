@@ -1,7 +1,7 @@
 var a = 'aaaaaa';
 
-console.log(a);
+console.log('meow');
 
-console.log(a);
+console.log('meow');
 
-console.log(a);
+console.log('meow');
