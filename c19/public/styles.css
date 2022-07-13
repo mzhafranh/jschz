@@ -34,7 +34,6 @@ font-size: 300%;
 .button {
     display: inline-block;
     padding: 10px 20px;
-    font-size: 20px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
