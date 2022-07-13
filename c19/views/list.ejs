@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <title>Data Siswa</title>
+</head>
+<body>
+    <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <table style="width: 100%" border="1" id = "daftar">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>String</th>
+                <th>Integer</th>
+                <th>Float</th>
+                <th>Date</th>
+                <th>Boolean</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach((item, index) => { %>
+            <tr>
+                <td><%= index + 1 %></td>
+                <td><%= item.string %></td>
+                <td><%= item.integer %></td>
+                <td><%= item.float %></td>
+                <td><%= item.date %></td>
+                <td><%= item.boolean %></td>
+                <td>
+                    <a href="/edit/<%= index %>" class="buttonedit">Edit</a>
+                    
+                    <a href="/delete/<%= index %>" class="buttondel">Delete</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <br>
+    <!-- <form action="/add">
+        <input type="submit" value="Tambah">
+    </form> -->
+    <a href="/add" class="button">Tambah</a>
+
+</body>
+</html>

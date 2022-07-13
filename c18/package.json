@@ -9,5 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type" : "module"
+  "type" : "module",
+  "dependencies": {
+    "cli-table": "^0.3.11",
+    "sqlite3": "^5.0.8"
+  }
 }
