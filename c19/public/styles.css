@@ -6,7 +6,7 @@ font-size: 300%;
 }
 
 .buttonedit {
-    background-color: #24e962;
+    background-color: #23c657;
     color: white;
     padding: 6px 20px;
     border: none;
@@ -15,11 +15,11 @@ font-size: 300%;
 }
 
 .buttonedit:hover {
-    background-color: rgb(28, 165, 79);
+    background-color: rgb(21, 120, 57);
 }
 
 .buttondel {
-    background-color: #e92445;
+    background-color: #c82540;
     color: white;
     padding: 6px 20px;
     border: none;
@@ -28,7 +28,7 @@ font-size: 300%;
 }
 
 .buttondel:hover {
-    background-color: #b11e36;
+    background-color: #7c1627;
 }
 
 .button {
