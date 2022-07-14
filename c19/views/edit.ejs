@@ -43,7 +43,7 @@
                     <label for="date">Date</label>
                 </div>
                 <div class="col-85">
-                    <input type="date" name="date" placeholder="Masukkan Date" value = "<%= item.date %>">
+                    <input type="date" name="date" value = "<%= item.date %>">
                 </div>
             </div>
 
@@ -54,8 +54,8 @@
                 <div class="col-85">
                     <select id="boolean" , name="boolean">
                         <option value="">Choose an option</option>
-                        <option value="true" <%= item.boolean == "true" ? 'selected' : '' %>>true</option>
-                        <option value="false" <%= item.boolean == "false" ? 'selected' : '' %>>false</option>
+                        <option value="true" <%= item.boolean == true ? 'selected' : '' %>>true</option>
+                        <option value="false" <%= item.boolean == false ? 'selected' : '' %>>false</option>
                     </select>
                 </div>
             </div>

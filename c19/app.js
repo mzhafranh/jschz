@@ -56,7 +56,7 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.post('/edit/:id', (req, res) => {
-    data[req.params.id] = {string: req.body.string, integer: req.body.integer, float: req.body.float, date: req.body.date, boolean: req.body.boolean}
+    data[req.params.id] = {string: req.body.string, integer: parseInt(req.body.integer), float: parseFloat(req.body.float), date: req.body.date, boolean: JSON.parse(req.body.boolean)}
     saveList(data);
     res.redirect('/');
 })

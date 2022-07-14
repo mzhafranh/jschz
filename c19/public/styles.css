@@ -1,6 +1,9 @@
+body{
+  background-color: #F9EBDE;
+}
 
 h1 {
-color: rgb(30, 30, 30);
+color: #815854;
 font-family: Arial, Helvetica, sans-serif;
 font-size: 300%;
 }
@@ -13,6 +16,7 @@ font-size: 300%;
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .buttonedit:hover {
@@ -27,6 +31,7 @@ font-size: 300%;
     border-radius: 4px;
     cursor: pointer;
     text-decoration: none;
+    font-weight: bold;
 }
 
 .buttondel:hover {
@@ -42,12 +47,13 @@ font-size: 300%;
     text-decoration: none;
     outline: none;
     color: #fff;
-    background-color: #3ca3ed;
+    background-color: #815854;
     border: none;
     border-radius: 4px;
+    font-weight: bold;
   }
   
-  .button:hover {background-color: #2d7fb9}
+  .button:hover {background-color: #593e3b}
 
   #daftar {
     font-family: Arial, Helvetica, sans-serif;
@@ -62,6 +68,7 @@ font-size: 300%;
   }
   
   #daftar tr:nth-child(even){background-color: #f2f2f2;}
+  #daftar tr:nth-child(odd){background-color: #ffffff;}
   
   #daftar tr:hover {background-color: #ddd;}
   
@@ -69,7 +76,7 @@ font-size: 300%;
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
-    background-color: #209ed4;
+    background-color: #815854;
     color: white;
   }
 
@@ -92,22 +99,23 @@ font-size: 300%;
   }
   
   input[type=submit] {
-    background-color: #2490e9;
-    color: white;
+    background-color: #F9EBDE;
+    color: #815854;
     padding: 12px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     float: right;
+    font-weight: bold;
   }
 
   input[type=submit]:hover {
-    background-color: #1f77bf;
+    background-color: #c7b9ac;
   }
   
   .container {
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: #815854;
     padding: 20px;
   }
   
@@ -115,6 +123,8 @@ font-size: 300%;
     float: left;
     width: 15%;
     margin-top: 6px;
+    color: #ffffff;
+    font-weight: bold;
   }
   
   .col-85 {
@@ -138,4 +148,4 @@ font-size: 300%;
     }
   }
 
- 
+  
