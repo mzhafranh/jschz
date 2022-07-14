@@ -6,12 +6,13 @@ font-size: 300%;
 }
 
 .buttonedit {
-    background-color: #23c657;
+    background-color: #39ca67;
     color: white;
     padding: 6px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .buttonedit:hover {
@@ -19,12 +20,13 @@ font-size: 300%;
 }
 
 .buttondel {
-    background-color: #c82540;
+    background-color: #c5324b;
     color: white;
     padding: 6px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .buttondel:hover {
@@ -32,6 +34,7 @@ font-size: 300%;
 }
 
 .button {
+    font-family: Arial, Helvetica, sans-serif;
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
@@ -50,6 +53,7 @@ font-size: 300%;
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
   }
   
   #daftar td, #daftar th {
@@ -64,7 +68,7 @@ font-size: 300%;
   #daftar th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: center;
     background-color: #209ed4;
     color: white;
   }
@@ -73,7 +77,7 @@ font-size: 300%;
     box-sizing: border-box;
   }
   
-  input[type=text], select, textarea {
+  input[type=text], select, textarea, [type=date] {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -133,3 +137,5 @@ font-size: 300%;
       margin-top: 0;
     }
   }
+
+ 
