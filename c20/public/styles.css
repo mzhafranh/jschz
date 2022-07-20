@@ -215,14 +215,14 @@ h4 {
   float: left;
   padding: 8px 16px;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: 50px;
   background-color: #815854;
 }
 
 .pagination a.active {
   background-color: #a3736e;
   color: white;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .pagination a:hover:not(.active) {background-color: rgb(80, 80, 80);}

@@ -59,7 +59,7 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     const page = req.query.page || 1;
-    const limit = 3;
+    const limit = 5;
     const offset = (page - 1) * limit;
 
     db.all('SELECT COUNT(*) AS total FROM data', (err,data) => {
@@ -72,7 +72,6 @@ app.get('/', (req, res) => {
                 console.error(err);
             }
             res.render('list', { rows: data , pages, page})
-            console.log(page)
         })
     })
 })
@@ -147,22 +146,20 @@ app.post('/', (req, res) => {
         totalQuerry += 'boolean = ? ';
         filter.push(req.body.boolean);
     }
-    console.log(querry)
-    console.log(totalQuerry)
-    console.log(filter)
 
     search(totalQuerry, filter, (err, data) => {
         if (err) {
             console.error(err);
         }
         const page = req.query.page || 1;
-        const limit = 3;
+        const limit = 5;
         const offset = (page - 1) * limit;
         const pages = Math.ceil(data[0].total / limit)
         querry += 'LIMIT ? OFFSET ?';
         filter.push(limit);
         filter.push(offset);
         search(querry, filter, (err, data) => {
+            console.log(data)
             if (err) {
                 console.error(err);
             }
