@@ -51,8 +51,7 @@ app.get('/', (req, res) => {
     const offset = (page - 1) * limit;
     const wheres = []
     const values = []
-
-    console.log(req.query)
+    const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
 
     if (req.query.id && req.query.idCheck){
         wheres.push(`id = ?`);
@@ -118,7 +117,7 @@ app.get('/', (req, res) => {
             if (err) {
                 console.error(err);
             }
-            res.render('list', { rows: data , pages, page})
+            res.render('list', { rows: data , pages, page, filter})
         })
     })
 })
