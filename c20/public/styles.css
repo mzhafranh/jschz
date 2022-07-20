@@ -63,6 +63,8 @@ h4 {
     border: none;
     border-radius: 4px;
     font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
   
   .button:hover {background-color: #593e3b}
@@ -129,7 +131,11 @@ h4 {
     border-radius: 5px;
     background-color: #815854;
     padding: 20px;
-    
+  }
+
+  .containerx {
+    margin-left: 5%;
+    margin-right: 5%;
   }
   
   

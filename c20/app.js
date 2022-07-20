@@ -11,20 +11,8 @@ const db = new sqlite3.Database("c20db.db", sqlite3.OPEN_READWRITE, err => {
     }
 })
 
-function read(callback) {
-    db.all('SELECT * FROM data', (err, data) => {
-        callback(err, data);
-    })
-}
-
 function select(id, callback) {
     db.all('SELECT * FROM data WHERE id = ?', id, (err, data) => {
-        callback(err, data);
-    })
-}
-
-function search(querry, filter, callback) {
-    db.all(querry, filter, (err, data) => {
         callback(err, data);
     })
 }
@@ -61,107 +49,72 @@ app.get('/', (req, res) => {
     const page = req.query.page || 1;
     const limit = 5;
     const offset = (page - 1) * limit;
+    const wheres = []
+    const values = []
 
-    db.all('SELECT COUNT(*) AS total FROM data', (err,data) => {
+    console.log(req.query)
+
+    if (req.query.id && req.query.idCheck){
+        wheres.push(`id = ?`);
+        values.push(req.query.id);
+    }
+
+    if (req.query.string && req.query.stringCheck){
+        wheres.push(`string like '%' || ? || '%'`);
+        values.push(req.query.string);
+    }
+
+    if (req.query.integer && req.query.integerCheck){
+        wheres.push(`integer = ?`);
+        values.push(req.query.integer);
+    }
+
+    if (req.query.float && req.query.floatCheck){
+        wheres.push(`float = ?`);
+        values.push(req.query.float);
+    }
+
+    if (req.query.dateCheck){
+        if(req.query.startDate != '' && req.query.endDate != ''){
+            wheres.push('date BETWEEN ? AND ?')
+            values.push(req.query.startDate);
+            values.push(req.query.endDate);
+        }
+        else if(req.query.startDate){
+            wheres.push('date > ?')
+            values.push(req.query.startDate);
+        }
+        else if(req.query.endDate){
+            wheres.push('date < ?')
+            values.push(req.query.endDate);
+        }
+    }
+
+    if (req.query.boolean && req.query.booleanCheck){
+        wheres.push(`boolean = ?`);
+        values.push(req.query.boolean);
+    }
+
+
+    let sql = 'SELECT COUNT(*) AS total FROM data';
+    if (wheres.length > 0){
+        sql += ` WHERE ${wheres.join(' AND ')}`
+    }
+
+    console.log(sql)
+
+    db.all(sql, values, (err,data) => {
         if (err) {
             console.error(err);
         }
         const pages = Math.ceil(data[0].total / limit)
-        db.all('SELECT * FROM data LIMIT ? OFFSET ?', [limit, offset], (err,data) => {
-            if (err) {
-                console.error(err);
-            }
-            res.render('list', { rows: data , pages, page})
-        })
-    })
-})
-
-app.post('/', (req, res) => {
-    var totalQuerry = 'SELECT COUNT(*) FROM data ';
-    var querry = 'SELECT * FROM data ';
-    var filter = [];
-    if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on' || req.body.dateCheck == 'on' || req.body.booleanCheck == 'on') {
-        querry += 'WHERE ';
-        totalQuerry += 'WHERE ';
-    } else {
-        res.redirect('/')
-    }
-    if (req.body.idCheck == 'on'){
-        querry += 'id = ? '
-        totalQuerry += 'id= ? '
-        filter.push(req.body.id);
-    }
-    if (req.body.stringCheck == 'on'){
-        if (req.body.idCheck == 'on') {
-            querry += 'AND ';
-            totalQuerry += 'AND ';
+        sql = 'SELECT * FROM data'
+        if (wheres.length > 0){
+            sql += ` WHERE ${wheres.join(' AND ')}`
         }
-        querry += 'string = ? '
-        totalQuerry += 'string = ? ';
-        filter.push(req.body.string);
-    }
-    if (req.body.integerCheck == 'on'){
-        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on') {
-            querry += 'AND ';
-            totalQuerry += 'AND ';
-        }
-        querry += 'integer = ? '
-        totalQuerry += 'integer = ? ';
-        filter.push(parseInt(req.body.integer));
-    }
-    if (req.body.floatCheck == 'on'){
-        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on') {
-            querry += 'AND ';
-            totalQuerry += 'AND ';
-        }
-        querry += 'float = ? '
-        totalQuerry += 'float = ? ';
-        filter.push(parseFloat(req.body.float));
-    }
-    if (req.body.dateCheck == 'on'){
-        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on') {
-            querry += 'AND ';
-            totalQuerry += 'AND ';
-        }
-        if (req.body.startDate != '' && req.body.endDate != ''){
-            querry += 'date BETWEEN ? AND ? '
-            totalQuerry += 'date BETWEEN ? AND ? ';
-            filter.push(req.body.startDate);
-            filter.push(req.body.endDate);
-        } else if (req.body.startDate != '') {
-            querry += 'date > ?'
-            totalQuerry += 'date > ?';
-            filter.push(req.body.startDate);
-        } else if (req.body.endDate != '') {
-            querry += 'date < ?'
-            totalQuerry += 'date < ?';
-            filter.push(req.body.endDate);
-        }
-        
-    }
-    if (req.body.booleanCheck == 'on'){
-        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on' || req.body.dateCheck == 'on') {
-            querry += 'AND ';
-            totalQuerry += 'AND ';
-        }
-        querry += 'boolean = ? '
-        totalQuerry += 'boolean = ? ';
-        filter.push(req.body.boolean);
-    }
-
-    search(totalQuerry, filter, (err, data) => {
-        if (err) {
-            console.error(err);
-        }
-        const page = req.query.page || 1;
-        const limit = 5;
-        const offset = (page - 1) * limit;
-        const pages = Math.ceil(data[0].total / limit)
-        querry += 'LIMIT ? OFFSET ?';
-        filter.push(limit);
-        filter.push(offset);
-        search(querry, filter, (err, data) => {
-            console.log(data)
+        sql += ' LIMIT ? OFFSET ?';
+        console.log(sql)
+        db.all(sql, [...values, limit, offset], (err,data) => {
             if (err) {
                 console.error(err);
             }
