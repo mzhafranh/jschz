@@ -11,6 +11,7 @@
 
 <body>
     <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <%if (page == 1) {%>
     <h2>Filters</h2>
     <div class="container">
         <form action="" method="post">
@@ -91,6 +92,7 @@
             </div>
         </form>
     </div>
+    <% } %>
     <h2>Result</h2>
     <table style="width: 100%" border="1" id="daftar">
         <thead>
@@ -141,7 +143,7 @@
     <nav aria-label="Page navigation">
         <div class="pagination">
             <% for(let i = 1; i <=pages; i++) { %>
-                <a <%= page == i ? `class= "active"` : `` %> href="/?page=<%= i %>">
+                <a <%= page == i ? `class= active` : `` %> href="/?page=<%= i %>">
                 <%= i %>
                 </a>
             <% } %>

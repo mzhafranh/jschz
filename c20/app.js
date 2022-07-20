@@ -83,6 +83,8 @@ app.post('/', (req, res) => {
     if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on' || req.body.dateCheck == 'on' || req.body.booleanCheck == 'on') {
         querry += 'WHERE ';
         totalQuerry += 'WHERE ';
+    } else {
+        res.redirect('/')
     }
     if (req.body.idCheck == 'on'){
         querry += 'id = ? '
