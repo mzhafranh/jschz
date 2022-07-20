@@ -1,23 +1,4 @@
-// console.log("b" + "a" + + "a" + "a");
-// var a = true;
-
-// if (a === (!![])){
-//     console.log("WTF")
-// }
-
-// console.log(!![])
-
-// console.log(+([+!![]+!![]+!![]+!![]]+[+!![]+!![]]+[+[]]))
-
-// console.log((![]+[])[+[]]) //f
-// console.log((![]+[])[+!![]+!![]]) //l
-// console.log((![]+[])[+!![]]) //a
-// console.log((!![]+[])[+[]]) //t
-
-// const flat = (![]+[])[+[]] + (![]+[])[+!![]+!![]] + (![]+[])[+!![]] + (!![]+[])[+[]]
-
-// console.log([][(![]+[])[+[]] + (![]+[])[+!![]+!![]] + (![]+[])[+!![]] + (!![]+[])[+[]]]+[])
-
-// var test = "test"
-
-console.log(+!+[])
+// console.log(0.5 + 0.1 == 0.6)
+// console.log(0.1 + 0.2 == 0.3)
+console.log(Math.max())
+console.log(Math.min())

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database("c20db.db", sqlite3.OPEN_READWRITE, err => {
-    if (err){
+    if (err) {
         console.err(err);
     }
 })
@@ -23,19 +23,25 @@ function select(id, callback) {
     })
 }
 
-function add(id, string, integer, float, date, boolean, callback){
+function search(querry, filter, callback) {
+    db.all(querry, filter, (err, data) => {
+        callback(err, data);
+    })
+}
+
+function add(id, string, integer, float, date, boolean, callback) {
     db.run('INSERT INTO data VALUES (?, ?, ?, ?, ?, ?)', [id, string, integer, float, date, boolean], (err) => {
         callback(err);
     });
 }
 
-function update(newId, oldId, string, integer, float, date, boolean, callback){
+function update(newId, oldId, string, integer, float, date, boolean, callback) {
     db.run('UPDATE data SET id = ?, string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?', [newId, string, integer, float, date, boolean, oldId], (err) => {
         callback(err);
     });
 }
 
-function remove(id, callback){
+function remove(id, callback) {
     db.run('DELETE FROM data WHERE id = ?', [id], (err) => {
         callback(err);
     })
@@ -52,13 +58,119 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    read(function (err, data) {
-        if(err){
+    const page = req.query.page || 1;
+    const limit = 3;
+    const offset = (page - 1) * limit;
+
+    db.all('SELECT COUNT(*) AS total FROM data', (err,data) => {
+        if (err) {
             console.error(err);
         }
-        res.render('list', { rows: data })
+        const pages = Math.ceil(data[0].total / limit)
+        db.all('SELECT * FROM data LIMIT ? OFFSET ?', [limit, offset], (err,data) => {
+            if (err) {
+                console.error(err);
+            }
+            res.render('list', { rows: data , pages, page})
+            console.log(page)
+        })
     })
 })
+
+app.post('/', (req, res) => {
+    var totalQuerry = 'SELECT COUNT(*) FROM data ';
+    var querry = 'SELECT * FROM data ';
+    var filter = [];
+    if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on' || req.body.dateCheck == 'on' || req.body.booleanCheck == 'on') {
+        querry += 'WHERE ';
+        totalQuerry += 'WHERE ';
+    }
+    if (req.body.idCheck == 'on'){
+        querry += 'id = ? '
+        totalQuerry += 'id= ? '
+        filter.push(req.body.id);
+    }
+    if (req.body.stringCheck == 'on'){
+        if (req.body.idCheck == 'on') {
+            querry += 'AND ';
+            totalQuerry += 'AND ';
+        }
+        querry += 'string = ? '
+        totalQuerry += 'string = ? ';
+        filter.push(req.body.string);
+    }
+    if (req.body.integerCheck == 'on'){
+        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on') {
+            querry += 'AND ';
+            totalQuerry += 'AND ';
+        }
+        querry += 'integer = ? '
+        totalQuerry += 'integer = ? ';
+        filter.push(parseInt(req.body.integer));
+    }
+    if (req.body.floatCheck == 'on'){
+        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on') {
+            querry += 'AND ';
+            totalQuerry += 'AND ';
+        }
+        querry += 'float = ? '
+        totalQuerry += 'float = ? ';
+        filter.push(parseFloat(req.body.float));
+    }
+    if (req.body.dateCheck == 'on'){
+        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on') {
+            querry += 'AND ';
+            totalQuerry += 'AND ';
+        }
+        if (req.body.startDate != '' && req.body.endDate != ''){
+            querry += 'date BETWEEN ? AND ? '
+            totalQuerry += 'date BETWEEN ? AND ? ';
+            filter.push(req.body.startDate);
+            filter.push(req.body.endDate);
+        } else if (req.body.startDate != '') {
+            querry += 'date > ?'
+            totalQuerry += 'date > ?';
+            filter.push(req.body.startDate);
+        } else if (req.body.endDate != '') {
+            querry += 'date < ?'
+            totalQuerry += 'date < ?';
+            filter.push(req.body.endDate);
+        }
+        
+    }
+    if (req.body.booleanCheck == 'on'){
+        if (req.body.idCheck == 'on' || req.body.stringCheck == 'on' || req.body.integerCheck == 'on' || req.body.floatCheck == 'on' || req.body.dateCheck == 'on') {
+            querry += 'AND ';
+            totalQuerry += 'AND ';
+        }
+        querry += 'boolean = ? '
+        totalQuerry += 'boolean = ? ';
+        filter.push(req.body.boolean);
+    }
+    console.log(querry)
+    console.log(totalQuerry)
+    console.log(filter)
+
+    search(totalQuerry, filter, (err, data) => {
+        if (err) {
+            console.error(err);
+        }
+        const page = req.query.page || 1;
+        const limit = 3;
+        const offset = (page - 1) * limit;
+        const pages = Math.ceil(data[0].total / limit)
+        querry += 'LIMIT ? OFFSET ?';
+        filter.push(limit);
+        filter.push(offset);
+        search(querry, filter, (err, data) => {
+            if (err) {
+                console.error(err);
+            }
+            res.render('list', { rows: data , pages, page})
+        })
+    })
+})
+
 
 app.get('/add', (req, res) => {
     res.render('add')
@@ -66,7 +178,7 @@ app.get('/add', (req, res) => {
 
 app.post('/add', (req, res) => {
     add(req.body.id, req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean, (err) => {
-        if(err) {
+        if (err) {
             console.error(err);
         }
     })
@@ -76,7 +188,7 @@ app.post('/add', (req, res) => {
 app.get('/delete/:id', (req, res) => {
     const index = req.params.id
     remove(index, (err) => {
-        if (err){
+        if (err) {
             console.error(err);
         }
     })
@@ -88,13 +200,13 @@ app.get('/edit/:id', (req, res) => {
         if (err) {
             console.error(err);
         }
-        res.render('edit', {item: data[0]})
+        res.render('edit', { item: data[0] })
     })
 })
 
 app.post('/edit/:id', (req, res) => {
     update(req.body.id, req.params.id, req.body.string, parseInt(req.body.integer), parseFloat(req.body.float), req.body.date, req.body.boolean, (err) => {
-        if(err) {
+        if (err) {
             console.error(err)
         }
         res.redirect('/');
@@ -104,4 +216,3 @@ app.post('/edit/:id', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
-
