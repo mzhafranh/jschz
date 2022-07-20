@@ -53,71 +53,71 @@ app.get('/', (req, res) => {
     const values = []
     const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
 
-    if (req.query.id && req.query.idCheck){
+    if (req.query.id && req.query.idCheck) {
         wheres.push(`id = ?`);
         values.push(req.query.id);
     }
 
-    if (req.query.string && req.query.stringCheck){
+    if (req.query.string && req.query.stringCheck) {
         wheres.push(`string like '%' || ? || '%'`);
         values.push(req.query.string);
     }
 
-    if (req.query.integer && req.query.integerCheck){
+    if (req.query.integer && req.query.integerCheck) {
         wheres.push(`integer = ?`);
         values.push(req.query.integer);
     }
 
-    if (req.query.float && req.query.floatCheck){
+    if (req.query.float && req.query.floatCheck) {
         wheres.push(`float = ?`);
         values.push(req.query.float);
     }
 
-    if (req.query.dateCheck){
-        if(req.query.startDate != '' && req.query.endDate != ''){
+    if (req.query.dateCheck) {
+        if (req.query.startDate != '' && req.query.endDate != '') {
             wheres.push('date BETWEEN ? AND ?')
             values.push(req.query.startDate);
             values.push(req.query.endDate);
         }
-        else if(req.query.startDate){
+        else if (req.query.startDate) {
             wheres.push('date > ?')
             values.push(req.query.startDate);
         }
-        else if(req.query.endDate){
+        else if (req.query.endDate) {
             wheres.push('date < ?')
             values.push(req.query.endDate);
         }
     }
 
-    if (req.query.boolean && req.query.booleanCheck){
+    if (req.query.boolean && req.query.booleanCheck) {
         wheres.push(`boolean = ?`);
         values.push(req.query.boolean);
     }
 
 
     let sql = 'SELECT COUNT(*) AS total FROM data';
-    if (wheres.length > 0){
+    if (wheres.length > 0) {
         sql += ` WHERE ${wheres.join(' AND ')}`
     }
 
     console.log(sql)
 
-    db.all(sql, values, (err,data) => {
+    db.all(sql, values, (err, data) => {
         if (err) {
             console.error(err);
         }
         const pages = Math.ceil(data[0].total / limit)
         sql = 'SELECT * FROM data'
-        if (wheres.length > 0){
+        if (wheres.length > 0) {
             sql += ` WHERE ${wheres.join(' AND ')}`
         }
         sql += ' LIMIT ? OFFSET ?';
         console.log(sql)
-        db.all(sql, [...values, limit, offset], (err,data) => {
+        db.all(sql, [...values, limit, offset], (err, data) => {
             if (err) {
                 console.error(err);
             }
-            res.render('list', { rows: data , pages, page, filter})
+            res.render('list', { rows: data, pages, page, filter })
         })
     })
 })
