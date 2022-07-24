@@ -1,16 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-// const sqlite3 = require('sqlite3');
-
-// const db = new sqlite3.Database("c20db.db", sqlite3.OPEN_READWRITE, err => {
-//     if (err) {
-//         console.error(err);
-//     }
-// })
-
-
-
 /* GET home page. */
 module.exports = function (db) {
     function add(id, string, integer, float, date, boolean, callback) {
@@ -46,6 +36,9 @@ module.exports = function (db) {
         const values = []
         const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
         var count = 1;
+        var sortBy = req.query.sortBy == undefined ? `id` : req.query.sortBy;
+        var order = req.query.order == undefined ? `asc` : req.query.order;
+        
 
         console.log(req.query)
         console.log(filter)
@@ -108,13 +101,14 @@ module.exports = function (db) {
             if (wheres.length > 0) {
                 sql += ` WHERE ${wheres.join(' AND ')}`
             }
-            sql += ` ORDER BY id ASC LIMIT $${count++} OFFSET $${count++}`;
+            sql += ` ORDER BY ${sortBy} ${order} LIMIT $${count++} OFFSET $${count++}`;
             console.log(sql)
+            console.log([...values, limit, offset])
             db.query(sql, [...values, limit, offset], (err, data) => {
                 if (err) {
                     console.error(err);
                 }
-                res.render('list', { rows: data.rows, pages, page, filter, query: req.query })
+                res.render('list', { rows: data.rows, pages, page, filter, query: req.query, sortBy, order})
             })
         })
     })
@@ -162,4 +156,3 @@ module.exports = function (db) {
     })
     return router;
 }
-// module.exports = router;

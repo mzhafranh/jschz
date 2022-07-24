@@ -90,12 +90,12 @@
         <table class="table table-striped table-hover">
             <thead>
                 <tr class="table-primary">
-                    <th>ID</th>
-                    <th>String</th>
-                    <th>Integer</th>
-                    <th>Float</th>
-                    <th>Date</th>
-                    <th>Boolean</th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'id' && order == 'asc' ? "&sortBy=id&order=desc" : "&sortBy=id&order=asc"%>"  style="text-decoration: none; color:black"> ID <% if (sortBy == 'id' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'id' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'string' && order == 'asc' ? "&sortBy=string&order=desc" : "&sortBy=string&order=asc"%>"  style="text-decoration: none; color:black"> String <% if (sortBy == 'string' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'string' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'integer' && order == 'asc' ? "&sortBy=integer&order=desc" : "&sortBy=integer&order=asc"%>"  style="text-decoration: none; color:black"> Integer <% if (sortBy == 'integer' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'integer' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'float' && order == 'asc' ? "&sortBy=float&order=desc" : "&sortBy=float&order=asc"%>"  style="text-decoration: none; color:black"> Float <% if (sortBy == 'float' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'float' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'date' && order == 'asc' ? "&sortBy=date&order=desc" : "&sortBy=date&order=asc"%>"  style="text-decoration: none; color:black"> Date <% if (sortBy == 'date' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'date' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'boolean' && order == 'asc' ? "&sortBy=boolean&order=desc" : "&sortBy=boolean&order=asc"%>"  style="text-decoration: none; color:black"> Boolean <% if (sortBy == 'boolean' && order == 'asc') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'boolean' && order == 'desc') { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -103,7 +103,7 @@
                 <% rows.forEach((item, index)=> { %>
                     <tr>
                         <td>
-                            <%= item.id %>
+                            <%= item.id %> 
                         </td>
                         <td>
                             <%= item.string %>
@@ -134,15 +134,15 @@
         <br>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <a class="page-link" href="/?page=1<%=filter%>" aria-label="Previous">
+                <a class="page-link" href="/?page=1<%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
                 <% for(let i=1; i <=pages; i++) { %>
 
-                    <li class="page-item"><a class="page-link <%= page==i ? `active` : `` %>" href="/?page=<%=i%><%=filter%>"><%=i%></a></li>
+                    <li class="page-item"><a class="page-link <%= page==i ? `active` : `` %>" href="/?page=<%=i%><%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>"><%=i%></a></li>
 
                     <% } %>
-                        <a class="page-link" href="/?page=<%=pages%><%=filter%>" aria-label="Next">
+                        <a class="page-link" href="/?page=<%=pages%><%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
             </ul>

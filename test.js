@@ -7,7 +7,11 @@ const pool = new Pool({
   port: 5432,
 });
 
-pool.query('SELECT * FROM data ORDER BY id ASC', (err, result) => {
+
+var sort = 'DESC'
+var sortby = 'id';
+
+pool.query(`SELECT * FROM data ORDER BY ${sortby} ${sort} LIMIT $1 OFFSET $2`, [5, 0], (err, result) => {
     if (err) {
       return console.error('Error executing query', err.stack)
     }
