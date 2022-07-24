@@ -7,7 +7,7 @@ const sqlite3 = require('sqlite3');
 
 const db = new sqlite3.Database("c20db.db", sqlite3.OPEN_READWRITE, err => {
     if (err) {
-        console.err(err);
+        console.error(err);
     }
 })
 
@@ -53,27 +53,27 @@ app.get('/', (req, res) => {
     const values = []
     const filter = `&idCheck=${req.query.idCheck}&id=${req.query.id}&stringCheck=${req.query.stringCheck}&string=${req.query.string}&integerCheck=${req.query.integerCheck}&integer=${req.query.integer}&floatCheck=${req.query.floatCheck}&float=${req.query.float}&dateCheck=${req.query.dateCheck}&startDate=${req.query.startDate}&endDate=${req.query.endDate}&booleanCheck=${req.query.booleanCheck}&boolean=${req.query.boolean}`
 
-    if (req.query.id && req.query.idCheck) {
+    if (req.query.id && req.query.idCheck == 'on') {
         wheres.push(`id = ?`);
         values.push(req.query.id);
     }
 
-    if (req.query.string && req.query.stringCheck) {
+    if (req.query.string && req.query.stringCheck == 'on') {
         wheres.push(`string like '%' || ? || '%'`);
         values.push(req.query.string);
     }
 
-    if (req.query.integer && req.query.integerCheck) {
+    if (req.query.integer && req.query.integerCheck == 'on') {
         wheres.push(`integer = ?`);
         values.push(req.query.integer);
     }
 
-    if (req.query.float && req.query.floatCheck) {
+    if (req.query.float && req.query.floatCheck == 'on') {
         wheres.push(`float = ?`);
         values.push(req.query.float);
     }
 
-    if (req.query.dateCheck) {
+    if (req.query.dateCheck == 'on') {
         if (req.query.startDate != '' && req.query.endDate != '') {
             wheres.push('date BETWEEN ? AND ?')
             values.push(req.query.startDate);
@@ -89,7 +89,7 @@ app.get('/', (req, res) => {
         }
     }
 
-    if (req.query.boolean && req.query.booleanCheck) {
+    if (req.query.boolean && req.query.booleanCheck == 'on') {
         wheres.push(`boolean = ?`);
         values.push(req.query.boolean);
     }
