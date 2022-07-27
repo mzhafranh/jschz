@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/bootstrap.css" type="text/css">
+    <title>Add Data</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Add Data</h1>
+        <form action="" method="post">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">ID</span>
+                <input type="text" class="form-control" name="id" placeholder="Masukkan id data" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">String</span>
+                <input type="text" class="form-control" name="string" placeholder="Masukkan data string">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">Integer</span>
+                <input type="text" class="form-control" name="integer" placeholder="Masukkan data integer">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">Float</span>
+                <input type="text" class="form-control" name="float" placeholder="Masukkan data float">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">Date</span>
+                <input type="date" class="form-control" name="date">
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text" style="width: 80px; text-align: left;">Boolean</span>
+                <select name="boolean" class="form-select">
+                    <option value="">--Pilih boolean--</option>
+                    <option value=true>True</option>
+                    <option value=false>False</option>
+                </select>
+            </div>
+            <br>
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-primary"></input>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

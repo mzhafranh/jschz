@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel="icon" type="image/x-icon" href="/images/web_icon.png">
+    <title>List Data</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+        
+        <h2>Filters</h2>
+        <form method="get">
+            
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="idCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.idCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input" >
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">ID</span>
+                </div>
+                <input type="text" name="id" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="Masukkan id data" value="<%= query.id != 'undefined' && query.idCheck=='on' ? query.id : '' %>">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="stringCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.stringCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input">
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">String</span>
+                </div>
+                <input type="text" name="string" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="Masukkan data string" value="<%= query.string != 'undefined' && query.stringCheck=='on' ? query.string : '' %>">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="integerCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.integerCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input">
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">Integer</span>
+                </div>
+                <input type="text" name="integer" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="Masukkan data integer" value="<%= query.integer != 'undefined' && query.inetegerCheck=='on' ? query.integer : '' %>">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="floatCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.floatCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input">
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">Float</span>
+                </div>
+                <input type="text" name="float" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="Masukkan data float" value="<%= query.float != 'undefined' && query.floatCheck=='on' ? query.float : '' %>">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="dateCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.dateCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input">
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">Date</span>
+                </div>
+                <input type="date" name="startDate" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="Start Date" value="<%= query.dateCheck=='on' ? query.startDate : '' %>">
+                <span class="input-group-text">To</span>
+                <input type="date" name="endDate" class="form-control" aria-label="Text input with checkbox"
+                    placeholder="End Date" value="<%= query.dateCheck=='on' ? query.endDate : '' %>">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-text">
+                    <input name="booleanCheck" class="form-check-input mt-0" type="checkbox" style="margin-right: 10px;" <%=query.booleanCheck=='on' ? `checked` : '' %>
+                        aria-label="Checkbox for following text input">
+                    <span class="checkbox-inline" style="width: 60px; text-align: left;">Boolean</span>
+                </div>
+                <select class="form-select" id="boolean" name="boolean">
+                    <option value="">--Pilih boolean--</option>
+                    <option value=true <%= query.boolean=='true'  && query.booleanCheck=='on' ? 'selected' : '' %>>True</option>
+                    <option value=false <%= query.boolean=='false'  && query.booleanCheck=='on' ? 'selected' : '' %>>False</option>
+                </select>
+            </div>
+
+            <input type="submit" value="Search" class="btn btn-primary"></input>
+        </form>
+        <br>
+        <h2>Result</h2>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'id' && order == 1 ? "&sortBy=id&order=-1" : "&sortBy=id&order=1"%>"  style="text-decoration: none; color:black"> ID <% if (sortBy == 'id' && order == '1') { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'id' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'string' && order == 1 ? "&sortBy=string&order=-1" : "&sortBy=string&order=1"%>"  style="text-decoration: none; color:black"> String <% if (sortBy == 'string' && order == 1) { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'string' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'integer' && order == 1 ? "&sortBy=integer&order=-1" : "&sortBy=integer&order=1"%>"  style="text-decoration: none; color:black"> Integer <% if (sortBy == 'integer' && order == 1) { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'integer' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'float' && order == 1 ? "&sortBy=float&order=-1" : "&sortBy=float&order=1"%>"  style="text-decoration: none; color:black"> Float <% if (sortBy == 'float' && order == 1) { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'float' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'date' && order == 1 ? "&sortBy=date&order=-1" : "&sortBy=date&order=1"%>"  style="text-decoration: none; color:black"> Date <% if (sortBy == 'date' && order == 1) { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'date' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th><a href="/?page=1<%=filter%><%= sortBy == 'boolean' && order == 1 ? "&sortBy=boolean&order=-1" : "&sortBy=boolean&order=1"%>"  style="text-decoration: none; color:black"> Boolean <% if (sortBy == 'boolean' && order == 1) { %><img src="/images/sort-up-solid.svg" alt="" width="8px"><% } else if (sortBy == 'boolean' && order == -1) { %><img src="/images/sort-down-solid.svg" alt="" width="8px"><% } else { %><img src="/images/sort-solid.svg" alt="" width="8px"><% } %></a></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% rows.forEach((item, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= item.id %> 
+                        </td>
+                        <td>
+                            <%= item.string %>
+                        </td>
+                        <td>
+                            <%= item.integer %>
+                        </td>
+                        <td>
+                            <%= item.float %>
+                        </td>
+                        <td>
+                            <%= item.date %>
+                        </td>
+                        <td>
+                            <%= item.boolean==1 ? 'True' : 'False' %>
+                        </td>
+                        <td>
+                            <a href="/edit/<%= item.id %>" class="btn btn-warning" style="color: #ffffff;">Edit</a>
+
+                            <a href="/delete/<%= item.id %>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <a href="/add" class="btn btn-primary">+ Add</a>
+        <br>
+        <br>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <a class="page-link" href="/?page=1<%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                <% for(let i=1; i <=pages; i++) { %>
+
+                    <li class="page-item"><a class="page-link <%= page==i ? `active` : `` %>" href="/?page=<%=i%><%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>"><%=i%></a></li>
+
+                    <% } %>
+                        <a class="page-link" href="/?page=<%=pages%><%=filter%>&sortBy=<%=sortBy%>&order=<%=order%>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+            </ul>
+        </nav>
+    </div>
+
+</body>
+
+</html>
