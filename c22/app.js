@@ -4,8 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-
-
 const { MongoClient } = require('mongodb');
 // or as an es module:
 // import { MongoClient } from 'mongodb'
@@ -152,6 +150,6 @@ async function main() {
 }
 
 main()
-  .then(console.log)
+  .then()
   .catch(console.error)
 

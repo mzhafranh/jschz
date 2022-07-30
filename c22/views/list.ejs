@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="stylesheets/bootstrap.css">
     <link rel="icon" type="image/x-icon" href="/images/web_icon.png">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
     <title>List Data</title>
 </head>
 
@@ -84,6 +85,7 @@
             </div>
 
             <input type="submit" value="Search" class="btn btn-primary"></input>
+            <a href="/?page=1" class="btn btn-warning" style="color: #ffffff;">Reset</a>
         </form>
         <br>
         <h2>Result</h2>
@@ -121,9 +123,9 @@
                             <%= item.boolean==1 ? 'True' : 'False' %>
                         </td>
                         <td>
-                            <a href="/edit/<%= item.id %>" class="btn btn-warning" style="color: #ffffff;">Edit</a>
+                            <a href="/edit/<%= item.id %>" class="btn btn-warning" style="color: #ffffff;"><i class="fa-solid fa-pencil"></i></a>
 
-                            <a href="/delete/<%= item.id %>" class="btn btn-danger">Delete</a>
+                            <a href="/delete/<%= item.id %>" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                         </td>
                     </tr>
                     <% }) %>
