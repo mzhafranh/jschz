@@ -28,16 +28,14 @@ module.exports = function (db) {
       wheres.push(`"float" : ${req.query.float}`);
     }
 
-    if (req.query.dateCheck == 'on') {
-      if (req.query.startDate != '' && req.query.endDate != '') {
-        wheres.push(`"date" :{ "$gt": "${req.query.startDate}", "$lte": "${req.query.endDate}"}`)
-      }
-      else if (req.query.startDate) {
-        wheres.push(`"date": {"$gt": "${req.query.startDate}"}`)
-      }
-      else if (req.query.endDate) {
-        wheres.push(`"date": {"$lte": "${req.query.endDate}"}`)
-      }
+    if (req.query.startDate != '' && req.query.endDate != '') {
+      wheres.push(`"date" :{ "$gt": "${req.query.startDate}", "$lte": "${req.query.endDate}"}`)
+    }
+    else if (req.query.startDate) {
+      wheres.push(`"date": {"$gt": "${req.query.startDate}"}`)
+    }
+    else if (req.query.endDate) {
+      wheres.push(`"date": {"$lte": "${req.query.endDate}"}`)
     }
 
     if (req.query.boolean) {

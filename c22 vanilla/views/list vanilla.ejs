@@ -53,7 +53,11 @@
                     <div class="row mb-3">
                         <label for="searchDate" class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="searchDate" name="searchDate">
+                            <div class="input-group">
+                            <input type="date" class="form-control" id="startDate" name="startDate">
+                            <span class="input-group-text">To</span>
+                            <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
                         </div>
                     </div>
 
@@ -330,7 +334,7 @@
                 }
                 return response.json();
             }).then((response) => {
-                readData(`id=&string=&integer=&float=&date=&boolean=&display=3&sortBy=id&order=1&page=1`)
+                readData(`id=&string=&integer=&float=&startDate=&endDate=&boolean=&display=3&sortBy=id&order=1&page=1`)
                 document.getElementById("form-data").reset();
             });
         }
@@ -372,11 +376,11 @@
             }
             return response.json();
         }).then((response) => {
-            readData(`id=&string=&integer=&float=&date=&boolean=&display=3&sortBy=id&order=1&page=1`)
+            readData(`id=&string=&integer=&float=&startDate=&endDate=&boolean=&display=3&sortBy=id&order=1&page=1`)
         });
     }
 
-    readData(`id=&string=&integer=&float=&date=&boolean=&display=3&sortBy=id&order=1&page=1`)
+    readData(`id=&string=&integer=&float=&startDate=&endDate=&boolean=&display=3&sortBy=id&order=1&page=1`)
 
     document.getElementById('form-data').addEventListener('submit', function (event) {
         event.preventDefault();
@@ -398,11 +402,12 @@
         const string = document.getElementById('searchString').value
         const integer = document.getElementById('searchInteger').value
         const float = document.getElementById('searchFloat').value
-        const date = document.getElementById('searchDate').value
+        const startDate = document.getElementById('startDate').value
+        const endDate = document.getElementById('endDate').value
         const boolean = document.getElementById('searchBoolean').value
         const sortby = 'id';
         const order = 1;
-        let params = {id, string, integer, float, date, boolean, display, page}
+        let params = {id, string, integer, float, startDate, endDate, boolean, display, page}
         let link = new URLSearchParams(params).toString()
     readData(link)
   })
