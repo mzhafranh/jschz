@@ -42,6 +42,19 @@ function spiral(param1){
 
 }
 
+function spiralx(num){
+    const matriks  = []
+    let counter = 0
+    for (let i = 0; i < size; i++) {
+        matriks[i] = [];
+        for (let j = 0; j < size; j++) {
+            matriks[i][j] = counter++
+        }
+    }
+    
+
+}
+
 spiral(5);
 spiral(6);
 spiral(7);

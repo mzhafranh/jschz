@@ -18,6 +18,13 @@ function weirdMultiply(num){
         return (weirdMultiply(total));
     }
 }
+
+function weirdMultiplyx(num){
+    if(num.toString().length == 1)
+        return num
+    
+}
+
 console.log(weirdMultiply(39));
 console.log(weirdMultiply(999));
 console.log(weirdMultiply(3));
