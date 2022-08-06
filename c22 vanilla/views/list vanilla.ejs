@@ -75,6 +75,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Cari</button>
+                    <button class="btn btn-warning" id="form-reset" onClick="resetForm()" style="color: #ffffff;">Reset</button>
                 </div>
             </div>
         </form>
@@ -378,6 +379,11 @@
         }).then((response) => {
             readData(`id=&string=&integer=&float=&startDate=&endDate=&boolean=&display=3&sortBy=id&order=1&page=1`)
         });
+    }
+
+    const resetForm = () => {
+        document.getElementById('idObj').value = ''
+        document.getElementById("form-search").reset();
     }
 
     readData(`id=&string=&integer=&float=&startDate=&endDate=&boolean=&display=3&sortBy=id&order=1&page=1`)

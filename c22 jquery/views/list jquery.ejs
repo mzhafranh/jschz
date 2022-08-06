@@ -76,6 +76,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Cari</button>
+                    <button class="btn btn-warning" id="reset-form-search" style="color: #ffffff;">Reset</button>
                 </div>
             </div>
         </form>
@@ -166,7 +167,9 @@
 <script>
     var params = {
         display: 3,
-        page: 1
+        page: 1,
+        sortBy: 'id',
+        order: 1
     }
     var idObj = $('#idObj').val()
 
@@ -179,7 +182,65 @@
         }).done(function (response) {
             params = { ...params, totalPages: response.totalPages }
             let htmlTbody = ''
+            let htmlThead = ''
+            htmlThead += `<tr>`
+                if (params["sortBy"] == 'id' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="id" order = -1>ID<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'id' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="id" order = 1>ID<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="id" order = 1>ID<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+
+                if (params["sortBy"] == 'string' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="string" order = -1>String<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'string' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="string" order = 1>String<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="string" order = 1>String<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+
+                if (params["sortBy"] == 'integer' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="integer" order = -1>Integer<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'integer' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="integer" order = 1>Integer<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="integer" order = 1>Integer<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+
+                if (params["sortBy"] == 'float' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="float" order = -1>Float<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'float' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="float" order = 1>Float<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="float" order = 1>Float<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+
+                if (params["sortBy"] == 'date' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="date" order = -1>Date<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'date' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="date" order = 1>Date<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="date" order = 1>Date<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+
+                if (params["sortBy"] == 'boolean' && params["order"] == 1){
+                    htmlThead += `<th><button class="btn" sortby ="boolean" order = -1>Boolean<i class="fa-solid fa-sort-down" style="margin-left:10px;"></i></button></th>`
+                }
+                else if (params["sortBy"] == 'boolean' && params["order"] == -1){
+                    htmlThead += `<th><button class="btn" sortby ="boolean" order = 1>Boolean<i class="fa-solid fa-sort-up" style="margin-left:10px;"></i></button></th>`
+                } else {
+                    htmlThead += `<th><button class="btn" sortby ="boolean" order = 1>Boolean<i class="fa-solid fa-sort" style="margin-left:10px;"></i></button></th>`
+                }
+                htmlThead += `<th>Action</th>`
+                
             response.data.forEach((item, index) => {
+                
                 htmlTbody += `
                 <tr>
                     <td>${item.id}</td>
@@ -193,6 +254,7 @@
                 </tr>
         `
             });
+            $('table thead').html(htmlThead)
             $('table tbody').html(htmlTbody)
             $('p').html();
             pagination();
@@ -201,14 +263,16 @@
         })
     }
 
-    const saveData = (idObj, id, string, integer, float, date, boolean => {
+    const saveData = ((idObj, id, string, integer, float, date, boolean) => {
         if (idObj) {
+            console.log("sampe sini edit")
             $.ajax({
                 method: "PUT",
                 url: `http://localhost:3000/data/${idObj}`,
                 dataType: "json",
                 data: { id, string, integer, float, date, boolean }
             }).done(function (response) {
+                console.log('berhasil ajax')
                 readData()
                 $('#idObj').val('')
                 $("#form-data").trigger("reset");
@@ -216,6 +280,7 @@
                 alert('gagal pake jquery')
             })
         } else {
+            console.log("sampe sini new data")
             $.ajax({
                 method: "POST",
                 url: `http://localhost:3000/data`,
@@ -299,6 +364,12 @@
             saveData(idObj, id, string, integer, float, date, boolean)
         })
 
+        $('table thead').on('click', '.btn', function () {
+            params["sortBy"] = $(this).attr('sortBy')
+            params["order"] = $(this).attr('order')
+            readData()
+        })
+
         $('table tbody').on('click', '.btn-warning', function () {
             const idObj = $(this).attr('iddata')
             editData(idObj)
@@ -318,6 +389,7 @@
             const startDate = $('#startDate').val()
             const endDate = $('#endDate').val()
             const boolean = $('#searchBoolean').val()
+            params["page"] = 1;
             params = { ...params, id, string, integer, float, startDate, endDate, boolean }
             readData()
         })
@@ -325,7 +397,9 @@
         $('#reset-form-search').click(function () {
             params = {
                 display: 3,
-                page: 1
+                page: 1,
+                sortBy: 'id',
+                order: 1
             }
             $("#form-search").trigger("reset");
             readData()
