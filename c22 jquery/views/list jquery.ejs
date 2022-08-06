@@ -54,7 +54,11 @@
                     <div class="row mb-3">
                         <label for="searchDate" class="col-sm-2 col-form-label">Date</label>
                         <div class="col-sm-10">
-                            <input type="date" class="form-control" id="searchDate" name="searchDate">
+                            <div class="input-group">
+                            <input type="date" class="form-control" id="startDate" name="startDate">
+                            <span class="input-group-text">To</span>
+                            <input type="date" class="form-control" id="endDate" name="endDate">
+                            </div>
                         </div>
                     </div>
 
@@ -150,7 +154,7 @@
                 </div>
             </div>
         </form>
-        <ul class="pagination mt-3">
+        <ul class="pagination mt-3" id="pagination">
 
         </ul>
         <p> </p>
@@ -164,6 +168,8 @@
         display: 3,
         page: 1
     }
+    var idObj = $('#idObj').val()
+
     const readData = () => {
         $.ajax({
             method: "GET",
@@ -188,6 +194,7 @@
         `
             });
             $('table tbody').html(htmlTbody)
+            $('p').html();
             pagination();
         }).fail(function (err) {
             alert('gagal pake jquery')
@@ -235,7 +242,8 @@
             $('#integer').val(response.integer)
             $('#float').val(response.float)
             $('#date').val(response.date)
-            $('#boolean').val(response.boolean)
+            $('#boolean').val([response.boolean])
+            idObj = $('#idObj').val()
         }).fail(function (err) {
             alert('gagal pake jquery')
         })
@@ -281,7 +289,7 @@
         
         $('#form-data').submit(function (event) {
             event.preventDefault();
-            const idObj = $('#idObj').val()
+            idObj = $('#idObj').val()
             const id = $('#id').val()
             const string = $('#string').val()
             const integer = $('#integer').val()
@@ -296,7 +304,7 @@
             editData(idObj)
         })
 
-        $('table tbody').on('click', '.btn-delete', function () {
+        $('table tbody').on('click', '.btn-danger', function () {
             const idObj = $(this).attr('iddata')
             deleteData(idObj)
         })
@@ -307,9 +315,10 @@
             const string = $('#searchString').val()
             const integer = $('#searchInteger').val()
             const float = $('#searchFloat').val()
-            const date = $('#searchDate').val()
+            const startDate = $('#startDate').val()
+            const endDate = $('#endDate').val()
             const boolean = $('#searchBoolean').val()
-            params = { ...params, id, string, integer, float, date, boolean }
+            params = { ...params, id, string, integer, float, startDate, endDate, boolean }
             readData()
         })
 

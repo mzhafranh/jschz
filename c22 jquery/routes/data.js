@@ -28,16 +28,14 @@ module.exports = function (db) {
       wheres.push(`"float" : ${req.query.float}`);
     }
 
-    if (req.query.dateCheck == 'on') {
-      if (req.query.startDate != '' && req.query.endDate != '') {
-        wheres.push(`"date" :{ "$gt": "${req.query.startDate}", "$lte": "${req.query.endDate}"}`)
-      }
-      else if (req.query.startDate) {
-        wheres.push(`"date": {"$gt": "${req.query.startDate}"}`)
-      }
-      else if (req.query.endDate) {
-        wheres.push(`"date": {"$lte": "${req.query.endDate}"}`)
-      }
+    if (req.query.startDate != '' && req.query.endDate != '' && req.query.startDate != undefined && req.query != undefined) {
+      wheres.push(`"date" :{ "$gt": "${req.query.startDate}", "$lte": "${req.query.endDate}"}`)
+    }
+    else if (req.query.startDate) {
+      wheres.push(`"date": {"$gt": "${req.query.startDate}"}`)
+    }
+    else if (req.query.endDate) {
+      wheres.push(`"date": {"$lte": "${req.query.endDate}"}`)
     }
 
     if (req.query.boolean) {
@@ -105,6 +103,7 @@ module.exports = function (db) {
   });
 
   router.put('/:id', async function (req, res, next) {
+    console.log("sampai sini ruter update " + req.params.id)
     try {
       const collection = db.collection('data');
       await collection.updateOne({
